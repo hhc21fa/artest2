@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title> AR Video Test 014 </title>
+    <title> AR Video Test 016 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -22,7 +22,9 @@
           if (!videoEl) { return; }
           this.el.object3D.visible = true;
           videoEl.play();
+          alert();
         }
+        
       });
     </script>
   </head>
@@ -31,8 +33,7 @@
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="near: 10; far: 10000; objects: .clickable"></a-camera>
 
       <a-assets>
-        <video id="svideo" preload="auto" src="https://cdn.aframe.io/videos/bunny.mp4" width="160" height="90" autoplay loop="true" crossOrigin="anonymous" muted></video>
-
+        <video id="svideo" preload="auto" src="https://cdn.aframe.io/videos/bunny.mp4" width="160" height="90" autoplay loop="true" crossOrigin="anonymous" muted></video>        
       </a-assets>
       <a-entity mindar-image-target="targetIndex: 0" id='map1'>
         <!-- Using the asset management system. -->
