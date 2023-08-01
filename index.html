@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title> AR Video Test 019 </title>
+    <title> AR Video Test 020 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -31,7 +31,6 @@
   <body>
     <a-scene mindar-image="filterMinCF:0.0001; filterBeta: 0.001;imageTargetSrc: targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="near: 10; far: 10000; objects: .clickable"></a-camera>
-
       <a-assets>
         <video id="svideo" autoplay loop="true" src="video.mp4" width="160" height="90" autoplay loop="true" crossOrigin="anonymous" muted></video>
       </a-assets>
@@ -39,13 +38,7 @@
         <!-- Using the asset management system. -->
         <a-entity material="shader: flat; src: #svideo" geometry="primitive: plane; width: 160; height: 90;" position="0 60 -250" rotation="0 35 0" play-on-click visible="true">
         </a-entity>
-        <a-video webkit-playsinline playsinline src="#video" width="16" height="9" rotation="90 0 0" scale="0.2 0.2 0.2" position="0 0.1 0" play-on-click  play="true"></a-video>
       </a-entity>
-
-      
-
-      
-      
     </a-scene>
   </body>
 </html>
