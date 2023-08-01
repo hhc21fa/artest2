@@ -1,12 +1,17 @@
 <html>
   <head>
-    <title> AR Video Test 024 </title>
+    <title> AR Video Test 026 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>    
     <script>
       /* global AFRAME */
+      var targetEl = document.querySelector('#map1');
+      targetEl.addEventListener('click', function() {
+        targetEl.setAttribute('material', {color: 'red'});
+        alert("ok")
+      });
       AFRAME.registerComponent('play-on-click', {
         init: function () {
           this.onClick = this.onClick.bind(this);
@@ -22,6 +27,7 @@
           if (!videoEl) { return; }
           this.el.object3D.visible = true;
           videoEl.play();
+          alert();
         }
         
       });
