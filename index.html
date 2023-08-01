@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title> AR Video Test 016 </title>
+    <title> AR Video Test 017 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -41,6 +41,17 @@
         </a-entity>
       </a-entity>
 
+      
+      <a-assets>
+        <video id="video" autoplay loop="true" src="video.mp4"></video>
+        <video id="svideo" autoplay loop="true" src="video.mp4"></video>
+      </a-assets>
+      <a-entity mindar-image-target="targetIndex: 0" id='map1'>
+        <!-- Using the asset management system. -->
+        <a-video webkit-playsinline playsinline src="#video" width="16" height="9" rotation="90 0 0" scale="0.2 0.2 0.2" position="0 0.1 0" play="true"></a-video>
+      </a-entity>
+
+      
       
     </a-scene>
   </body>
