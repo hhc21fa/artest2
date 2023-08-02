@@ -1,80 +1,117 @@
 <html>
-  <head>
-    <title> AR Video Demo 031 </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
-    <script>
 
-      document.addEventListener("DOMContentLoaded", function() {
-        const examplePlane = document.querySelector('#player');
-        examplePlane.addEventListener("click", event => {
-          //alert("PIN 001 clicked");
-          var videoEl = examplePlane.getAttribute('material').src;
-          //this.el.object3D.visible = true;
+<head>
+  <title> AR Video Demo 033</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-          videoEl.play();
+  <style>
+		video{
+			object-fit: cover;
+		}
+		.center-v button{
+			font-size: 3em;
+		}
+		.center-v {
+			height: 500px;
+			display: flex;
+			align-items: center;
+		}
+		.arjs-loader {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.8);
+			z-index: 9999;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 
-          /*
-          var videoEl = this.el.getAttribute('material').src;
-          if (!videoEl) { return; }
-          this.el.object3D.visible = true;
-          alert("PIN 001 clicked");
-          videoEl.play();
-          */
-        });
+	</style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const examplePlane = document.querySelector('#player');
+      examplePlane.addEventListener("click", event => {
+        var videoEl = examplePlane.getAttribute('material').src;
+        videoEl.play();
       });
-      /* global AFRAME */
-      AFRAME.registerComponent('play-on-click', {
-        init: function () {
-          this.onClick = this.onClick.bind(this);
 
-          var targetEl = document.querySelector('#map1');
-          targetEl.addEventListener('click', function() {
-            targetEl.setAttribute('material', {color: 'red'});
+      const sceneEl = document.querySelector('a-scene');
+      // arReady event triggered when ready
+          sceneEl.addEventListener("arReady", (event) => {
+      	  console.log("ar ready");
+          });
+  	// detect target found
+          sceneEl.addEventListener("targetFound", event => {
+            console.log("target found");
+            var videoEl = examplePlane.getAttribute('material').src;
+            videoEl.currentTime = 0;
+            videoEl.play();
+
+          });
+  	// detect target lost
+          sceneEl.addEventListener("targetLost", event => {
+            console.log("target lost");
+            var videoEl = examplePlane.getAttribute('material').src;
+            videoEl.pause();
+            videoEl.currentTime = 0;
+          });
+  	// arError event triggered when something went wrong. Mostly browser compatbility issue
+          sceneEl.addEventListener("arError", (event) => {
+      	  console.log("ar error");
           });
 
-        },
-        play: function () {
-          window.addEventListener('click', this.onClick);
-        },
-        pause: function () {
-          window.removeEventListener('click', this.onClick);
-        },
-        onClick: function (evt) {
-          var videoEl = this.el.getAttribute('material').src;
-          if (!videoEl) { return; }
-          //this.el.object3D.visible = true;
-          // videoEl.play();
-        }
+    });
+
+
+    var vid;
+
+    $(function() {
+
+      vid = $('#svideo').get(0);
+
+      $("#start").click(function() {
+
+        $('#pre_start').hide();
+        vid.play();
+        vid.pause();
+        vid.currentTime = 0;
 
       });
-    </script>
-  </head>
-  <body>
-    <a-scene mindar-image="filterMinCF:0.0001; filterBeta: 0.001;imageTargetSrc: targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="near: 10; far: 10000; objects: .clickable">
 
-        <a-entity
-          position="0 0 -1.5"
-          text="align: center;
-                width: 6;
-                wrapCount: 100;
-                color: black;
-                value: TAP TO START"
-          hide-on-play="#videoFireworks">
-        </a-entity>
-      </a-camera>
-      <a-assets>
-        <video id="svideo" autoplay loop="true" src="video.mp4" width="160" height="90" autoplay loop="true" crossOrigin="anonymous" muted></video>
-      </a-assets>
+    });
 
-      <a-entity mindar-image-target="targetIndex: 0" id='map1'>
-        <!-- Using the asset management system. -->
-        <a-entity class='clickable' id='player' material="shader: flat; src: #svideo" geometry="primitive: plane; width: 160; height: 90;" scale="0.01 0.01 0.01 "position="0 0 0" rotation="0 0 0" play-on-click visible="true">
-        </a-entity>
+
+  </script>
+</head>
+
+<body style="margin:0; overflow:hidden;">
+
+  <div class="arjs-loader" id="pre_start">
+  	<div class="center-v">
+  		<button id="start">Start</button>
+  	</div>
+  </div>
+
+  <a-scene registerevents mindar-image="filterMinCF:0.0001; filterBeta: 0.001;imageTargetSrc: targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="near: 10; far: 10000; objects: .clickable">
+    </a-camera>
+    <a-assets>
+      <video id="svideo" autoplay loop="true" src="video.mp4" width="160" height="90" autoplay loop="true" crossOrigin="anonymous" muted></video>
+    </a-assets>
+
+    <a-entity mindar-image-target="targetIndex: 0" id='map1' registerevents>
+      <!-- Using the asset management system. -->
+      <a-entity registerevents class='clickable' id='player' material="shader: flat; src: #svideo" geometry="primitive: plane; width: 160; height: 90;" scale="0.01 0.01 0.01 " position="0 0 0" rotation="0 0 0" play-on-click visible="true">
       </a-entity>
-    </a-scene>
-  </body>
+    </a-entity>
+  </a-scene>
+</body>
+
 </html>
